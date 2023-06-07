@@ -1,25 +1,28 @@
 using UnityEngine;
 using UniRx;
 
-public class MenuPresenter : MonoBehaviour
+namespace TitleUI
 {
-    [SerializeField]
-    MenuModel menuModel;
-    [SerializeField]
-    MenuView menuView;
-
-    void Start()
+    public class MenuPresenter : MonoBehaviour
     {
-        menuView.StartButton.Subscribe(x => 
-        {
-            Debug.Log("start");
-            menuModel.GameStart(); 
-        });
+        [SerializeField]
+        MenuModel menuModel;
+        [SerializeField]
+        MenuView menuView;
 
-        menuView.QuitButton.Subscribe(x => 
+        void Start()
         {
-            Debug.Log("Quit");
-            menuModel.GameQuit(); 
-        });
+            menuView.StartButton.Subscribe(x =>
+            {
+                Debug.Log("start");
+                menuModel.GameStart();
+            });
+
+            menuView.QuitButton.Subscribe(x =>
+            {
+                Debug.Log("Quit");
+                menuModel.GameQuit();
+            });
+        }
     }
 }

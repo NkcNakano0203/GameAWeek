@@ -1,44 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using DG.Tweening;
 using UniRx;
 using System;
 
-public class ButtonClicked : MonoBehaviour, IPointerClickHandler
+public class ButtonClicked : MonoBehaviour, IClickable
 {
-    RectTransform rectTransform;
+    [SerializeField]
+    Transform coinParent;
+
+    [SerializeField]
+    Coin coin;
+
+    [SerializeField]
+    Transform insPos;
+
+    private Subject<int> clickSubject = new();
+    public IObservable<int> ClickSubject => clickSubject;
 
     int clickPower = 1;
-    bool isAnimation = false;
 
-    private Subject<int> clickSubject = new Subject<int>();
-    public IObservable<int> ClickSubject => clickSubject;
+    Rigidbody rb;
 
     private void Awake()
     {
-        rectTransform = transform as RectTransform;
+        rb = GetComponent<Rigidbody>();
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnClicked()
     {
         // いついかなる時でもクリック判定は取りたい
         clickSubject.OnNext(clickPower);
+        rb.AddTorque(new Vector3(0, 1, 0), ForceMode.Impulse);
 
-        //アニメーションは同時に再生されない
-        if (isAnimation) return;
-        isAnimation = true;
-        rectTransform.DOShakeAnchorPos(0.1f, 50, randomnessMode: ShakeRandomnessMode.Harmonic)
-            .SetLink(gameObject)
-            .OnComplete(() =>
-            {
-                isAnimation = false;
-            });
-    }
-
-    void Start()
-    {
-        ClickSubject.Subscribe(_ => { Debug.Log("クリック！"); });
+        Coin coin = Instantiate(this.coin, insPos.position, Quaternion.identity, coinParent);
+        coin.RandomAddForce();
     }
 }

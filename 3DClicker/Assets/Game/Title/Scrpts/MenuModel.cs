@@ -1,21 +1,24 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuModel : MonoBehaviour
+namespace TitleUI
 {
-    const string GameScene = "GameScene";
-
-    public void GameStart()
+    public class MenuModel : MonoBehaviour
     {
-        SceneManager.LoadScene(GameScene);
-    }
+        const string GameScene = "GameScene";
 
-    public void GameQuit()
-    {
+        public void GameStart()
+        {
+            SceneManager.LoadScene(GameScene);
+        }
+
+        public void GameQuit()
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
     }
 }
