@@ -38,6 +38,17 @@
                 },
                 {
                     "name": "",
+                    "id": "c20c024e-b975-40b7-b77a-81498b295c8a",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b317a186-78bf-4724-9f19-65f94d3c6ca7",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
