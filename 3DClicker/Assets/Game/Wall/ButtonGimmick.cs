@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
 
-public class Gimmick : MonoBehaviour
+public class ButtonGimmick : MonoBehaviour
 {
     [SerializeField]
     Transform rotPoint1;
@@ -13,9 +14,16 @@ public class Gimmick : MonoBehaviour
     [SerializeField]
     Transform rotPoint3;
 
-    private async void OnCollisionEnter(Collision collision)
+    [SerializeField]
+    Button button;
+
+    private void Start()
     {
-        if (collision.collider.TryGetComponent<Coin>(out _)) return;
+        button.onClick.AddListener(Onclick);
+    }
+
+    public async void Onclick()
+    {
         rotPoint1.DOLocalRotate(new Vector3(0, 0, -90), 2.0f).SetLink(gameObject).ToUniTask().Forget();
         rotPoint2.DOLocalRotate(new Vector3(0, 0, 90), 2.0f).SetLink(gameObject).ToUniTask().Forget();
         await rotPoint3.DOLocalRotate(new Vector3(90, 0, 0), 2.0f).SetLink(gameObject);
